@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WebQuest: Detectives del Clima | Grado 8°</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Fraunces:ital,wght@0,300;0,700;1,300&display=swap');
+
+  :root {
+    --ocean: #0B3D6E;
+    --sky: #1A7FBF;
+    --ice: #C8E8F5;
+    --sand: #F5EDD8;
+    --coral: #E05A3A;
+    --leaf: #2D7A4F;
+    --fog: #EEF4F8;
+    --ink: #0D1B2A;
+    --mist: #7A9BB0;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Space Grotesk', sans-serif;
+    background: var(--fog);
+    color: var(--ink);
+    line-height: 1.6;
+  }
+
+  /* NAV */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--ocean);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 2rem;
+    box-shadow: 0 2px 12px rgba(11,61,110,0.3);
+  }
+  .nav-brand {
+    color: var(--ice);
+    font-weight: 1000;
+    font-size: 1.4rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-size: 20 px;
+    margin: 0;
+  }
+  .nav-links {
+    display: flex;
+    gap: 0.25rem;
+    list-style: none;
+    flex-wrap: wrap;
+  }
+  .nav-links a {
+    color: var(--ice);
+    text-decoration: none;
+    font-size: 0.78rem;
+    font-weight: 500;
+    padding: 0.35rem 0.7rem;
+    border-radius: 4px;
+    opacity: 0.8;
+    transition: opacity 0.2s, background 0.2s;
+    letter-spacing: 0.04em;
+  }
+  .nav-links a:hover { opacity: 1; background: rgba(200,232,245,0.15); }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, var(--ocean) 0%, #0E5490 50%, var(--sky) 100%);
+    color: white;
+    padding: 5rem 2rem 4rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+  }
+  .hero-tag {
+    display: inline-block;
+    background: var(--coral);
+    color: white;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.9rem;
+    border-radius: 20px;
+    margin-bottom: 1.5rem;
+  }
+  .hero h1 {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(2.4rem, 6vw, 4.5rem);
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+    position: relative;
+  }
+  .hero h1 em {
+    font-style: italic;
+    font-weight: 300;
+    color: var(--ice);
+  }
+  .hero-subtitle {
+    font-size: 1.1rem;
+    opacity: 0.85;
+    max-width: 560px;
+    margin: 0 auto 2rem;
+    font-weight: 300;
+  }
+  .hero-meta {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .hero-meta-item {
+    text-align: center;
+  }
+  .hero-meta-item .val {
+    display: block;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--ice);
+    font-family: 'Fraunces', serif;
+  }
+  .hero-meta-item .lbl {
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    opacity: 0.7;
+  }
+
+  /* WAVE */
+  .wave {
+    display: block;
+    width: 100%;
+    margin-bottom: -2px;
+  }
+
+  /* SECTIONS */
+  section {
+    padding: 4rem 2rem;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+  .section-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--sky);
+    margin-bottom: 0.5rem;
+  }
+  .section-title {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(1.7rem, 3.5vw, 2.4rem);
+    font-weight: 700;
+    color: var(--ocean);
+    line-height: 1.15;
+    margin-bottom: 1.5rem;
+  }
+  .section-body {
+    font-size: 1rem;
+    color: #2a3e52;
+    max-width: 680px;
+    line-height: 1.75;
+  }
+
+  /* DIVIDER */
+  .divider {
+    border: none;
+    border-top: 1px solid rgba(11,61,110,0.12);
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  /* AUDIENCE CARD */
+  .audience-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+  .audience-card {
+    background: white;
+    border: 1px solid var(--ice);
+    border-radius: 12px;
+    padding: 1.4rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.9rem;
+  }
+  .audience-icon {
+    font-size: 1.8rem;
+    flex-shrink: 0;
+    line-height: 1;
+  }
+  .audience-card h4 {
+    font-size: 0.82rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--sky);
+    margin-bottom: 0.3rem;
+  }
+  .audience-card p {
+    font-size: 0.88rem;
+    color: #4a6070;
+    line-height: 1.5;
+  }
+
+  /* TASK BOX */
+  .task-box {
+    background: var(--ocean);
+    color: white;
+    border-radius: 16px;
+    padding: 2.5rem;
+    margin-top: 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .task-box::after {
+    content: '🌍';
+    position: absolute;
+    right: 2rem;
+    bottom: 1rem;
+    font-size: 5rem;
+    opacity: 0.12;
+  }
+  .task-box h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+    color: var(--ice);
+  }
+  .task-box p { opacity: 0.88; line-height: 1.7; }
+  .question-list {
+    margin-top: 1.2rem;
+    list-style: none;
+    display: grid;
+    gap: 0.6rem;
+  }
+  .question-list li {
+    display: flex;
+    gap: 0.6rem;
+    align-items: flex-start;
+    font-size: 0.95rem;
+    opacity: 0.9;
+  }
+  .question-list li::before {
+    content: '→';
+    color: var(--coral);
+    flex-shrink: 0;
+    font-weight: 700;
+  }
+
+  /* PROCESS STEPS */
+  .steps {
+    margin-top: 2rem;
+    display: grid;
+    gap: 1.2rem;
+  }
+  .step {
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    gap: 1.2rem;
+    align-items: start;
+    background: white;
+    border-radius: 14px;
+    padding: 1.5rem;
+    border-left: 4px solid var(--sky);
+    box-shadow: 0 2px 8px rgba(11,61,110,0.06);
+    transition: box-shadow 0.2s;
+  }
+  .step:hover { box-shadow: 0 6px 20px rgba(11,61,110,0.12); }
+  .step-num {
+    width: 48px;
+    height: 48px;
+    background: var(--ocean);
+    color: white;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Fraunces', serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .step h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--ocean);
+    margin-bottom: 0.4rem;
+  }
+  .step p { font-size: 0.9rem; color: #4a6070; line-height: 1.6; }
+  .step-tag {
+    display: inline-block;
+    background: var(--ice);
+    color: var(--sky);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.6rem;
+    border-radius: 6px;
+    margin-top: 0.5rem;
+  }
+
+  /* RESOURCES */
+  .resources-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+  .resource-card {
+    background: white;
+    border-radius: 12px;
+    padding: 1.4rem;
+    border: 1px solid rgba(11,61,110,0.1);
+    box-shadow: 0 2px 8px rgba(11,61,110,0.05);
+  }
+  .resource-type {
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.25rem 0.6rem;
+    border-radius: 4px;
+    margin-bottom: 0.8rem;
+    display: inline-block;
+  }
+  .type-web { background: #E8F4FD; color: var(--sky); }
+  .type-video { background: #FDE8E8; color: #C0392B; }
+  .type-doc { background: #E8F5EE; color: var(--leaf); }
+  .type-datos { background: #FFF3E0; color: #E67E22; }
+  .resource-card h4 { font-size: 0.95rem; font-weight: 600; color: var(--ocean); margin-bottom: 0.4rem; }
+  .resource-card p { font-size: 0.82rem; color: #5a7080; line-height: 1.5; }
+  .resource-card a {
+    display: inline-block;
+    margin-top: 0.8rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--sky);
+    text-decoration: none;
+    border-bottom: 1px solid var(--ice);
+    padding-bottom: 1px;
+    transition: color 0.2s;
+  }
+  .resource-card a:hover { color: var(--ocean); }
+
+  /* EVALUATION TABLE */
+  .eval-section { padding: 4rem 2rem; background: var(--sand); }
+  .eval-inner { max-width: 960px; margin: 0 auto; }
+  .rubric {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 2rem;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 16px rgba(11,61,110,0.08);
+    font-size: 0.85rem;
+  }
+  .rubric thead { background: var(--ocean); color: white; }
+  .rubric th {
+    padding: 0.9rem 1rem;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.78rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .rubric td { padding: 0.9rem 1rem; border-bottom: 1px solid var(--ice); vertical-align: top; color: #2a3e52; line-height: 1.5; }
+  .rubric tr:last-child td { border-bottom: none; }
+  .rubric tr:nth-child(even) td { background: var(--fog); }
+  .score {
+    display: inline-block;
+    background: var(--ocean);
+    color: white;
+    font-weight: 700;
+    font-size: 0.8rem;
+    padding: 0.2rem 0.55rem;
+    border-radius: 5px;
+  }
+  .score.mid { background: var(--sky); }
+  .score.low { background: var(--mist); }
+
+  /* CONCLUSION */
+  .conclusion-bg {
+    background: linear-gradient(135deg, var(--leaf) 0%, #1A5E38 100%);
+    color: white;
+    padding: 4rem 2rem;
+    text-align: center;
+  }
+  .conclusion-inner { max-width: 640px; margin: 0 auto; }
+  .conclusion-inner .section-title { color: white; }
+  .conclusion-inner .section-body { color: rgba(255,255,255,0.85); max-width: 100%; }
+  .cta-box {
+    display: inline-block;
+    background: white;
+    color: var(--leaf);
+    font-weight: 700;
+    font-size: 0.95rem;
+    padding: 0.9rem 2rem;
+    border-radius: 40px;
+    margin-top: 2rem;
+    text-decoration: none;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+    letter-spacing: 0.04em;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .cta-box:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+
+  /* FOOTER */
+  footer {
+    background: var(--ink);
+    color: rgba(255,255,255,0.55);
+    text-align: center;
+    padding: 2rem;
+    font-size: 0.8rem;
+  }
+  footer strong { color: rgba(255,255,255,0.8); }
+
+  /* TEAMS */
+  .teams-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+  .team-card {
+    border-radius: 12px;
+    padding: 1.4rem;
+    text-align: center;
+    color: white;
+  }
+  .team-card .emoji { font-size: 2.2rem; display: block; margin-bottom: 0.6rem; }
+  .team-card h4 { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.4rem; }
+  .team-card p { font-size: 0.8rem; opacity: 0.85; line-height: 1.5; }
+  .team-1 { background: linear-gradient(135deg, #1A7FBF, #0B5A8A); }
+  .team-2 { background: linear-gradient(135deg, #2D7A4F, #1A4D30); }
+  .team-3 { background: linear-gradient(135deg, #E05A3A, #B03520); }
+  .team-4 { background: linear-gradient(135deg, #7B5EA7, #4A3570); }
+
+  @media (max-width: 640px) {
+    nav { padding: 0.75rem 1rem; flex-direction: column; gap: 0.5rem; }
+    .nav-links { justify-content: center; }
+    section { padding: 3rem 1rem; }
+    .hero { padding: 4rem 1rem 3rem; }
+    .rubric { font-size: 0.75rem; }
+    .rubric th, .rubric td { padding: 0.6rem 0.7rem; }
+  }
+  .logo-utmach {
+    width: 50px; /* Ajusta este valor al tamaño que prefieras */
+    height: auto; /* Mantiene la proporción original */
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <span class="nav-brand"><img src="https://www.utmachala.edu.ec/portalwp/wp-content/uploads/2015/08/LOGO_OUT.png" class="logo-utmach" alt="Logo UTMACH">Universidad Tecnica de Machala</span> 
+  <ul class="nav-links">
+    <li><a href="#introduccion">Introducción</a></li>
+    <li><a href="#tarea">Tarea</a></li>
+    <li><a href="#proceso">Proceso</a></li>
+    <li><a href="#recursos">Recursos</a></li>
+    <li><a href="#evaluacion">Evaluación</a></li>
+    <li><a href="#conclusion">Conclusión</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <span class="hero-tag"> Autor: Oliver Jazmani Encalada Perez</span>
+  <h1>Detectives <em>del Clima</em></h1>
+  <p class="hero-subtitle">Una investigación colaborativa para comprender el cambio climático y proponer soluciones reales desde nuestra comunidad.</p>
+  <div class="hero-meta">
+    <div class="hero-meta-item">
+      <span class="val">4</span>
+      <span class="lbl">Semanas</span>
+    </div>
+    <div class="hero-meta-item">
+      <span class="val">8°</span>
+      <span class="lbl">Grado</span>
+    </div>
+    <div class="hero-meta-item">
+      <span class="val">4</span>
+      <span class="lbl">Equipos temáticos</span>
+    </div>
+    <div class="hero-meta-item">
+      <span class="val">100</span>
+      <span class="lbl">Puntos totales</span>
+    </div>
+  </div>
+</div>
+
+<svg class="wave" viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+  <path d="M0,40 C360,80 1080,0 1440,40 L1440,60 L0,60 Z" fill="#EEF4F8"/>
+</svg>
+
+<!-- INTRODUCCIÓN -->
+<section id="introduccion">
+  <p class="section-label">Punto de partida</p>
+  <h2 class="section-title">¿Por qué el clima de nuestro planeta está cambiando?</h2>
+  <p class="section-body">
+    En las últimas décadas, los científicos han documentado algo alarmante: la temperatura media de la Tierra ha subido, los glaciares retroceden, las temporadas de lluvia se vuelven impredecibles y los eventos climáticos extremos son cada vez más frecuentes. Pero, ¿qué tiene que ver todo eso contigo y con tu comunidad?
+  </p>
+  <p class="section-body" style="margin-top:1rem;">
+    En esta WebQuest vas a convertirte en un <strong>detective del clima</strong>. Junto a tu equipo, investigarás las causas, consecuencias y posibles soluciones al cambio climático, y presentarás un informe que podría cambiar la manera en que tu escuela y barrio piensan sobre el medio ambiente.
+  </p>
+
+  <div class="audience-grid">
+    <div class="audience-card">
+      <span class="audience-icon">🎓</span>
+      <div>
+        <h4>Dirigido a</h4>
+        <p>Estudiantes de 8° grado (13-14 años) del área de Ciencias Naturales y Educación Ambiental.</p>
+      </div>
+    </div>
+    <div class="audience-card">
+      <span class="audience-icon">🕐</span>
+      <div>
+        <h4>Duración</h4>
+        <p>4 semanas de trabajo (aprox. 3 horas semanales en clase + consultas en casa).</p>
+      </div>
+    </div>
+    <div class="audience-card">
+      <span class="audience-icon">📚</span>
+      <div>
+        <h4>Área curricular</h4>
+        <p>Ciencias Naturales, Tecnología e Informática, y Competencias Ciudadanas.</p>
+      </div>
+    </div>
+    <div class="audience-card">
+      <span class="audience-icon">🌱</span>
+      <div>
+        <h4>Competencias</h4>
+        <p>Pensamiento crítico, investigación, trabajo en equipo y comunicación científica.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- TAREA -->
+<section id="tarea">
+  <p class="section-label">La misión</p>
+  <h2 class="section-title">Tu tarea como detective del clima</h2>
+  <p class="section-body">
+    Cada equipo asumirá el rol de un grupo de investigadores especializados. Juntos, producirán un <strong>Informe de Emergencia Climática</strong> para presentar ante el consejo estudiantil de la escuela, con propuestas concretas de acción local.
+  </p>
+
+  <div class="task-box">
+    <h3>Pregunta central de investigación</h3>
+    <p>¿Cuáles son las principales causas y consecuencias del cambio climático global, y qué acciones pueden tomar los jóvenes de nuestra comunidad para mitigar su impacto?</p>
+    <ul class="question-list">
+      <li>¿Cómo han cambiado las temperaturas globales en los últimos 100 años?</li>
+      <li>¿Qué actividades humanas generan más gases de efecto invernadero?</li>
+      <li>¿Qué efectos ya se observan en ecosistemas y comunidades locales?</li>
+      <li>¿Qué soluciones existen a nivel científico, tecnológico y ciudadano?</li>
+      <li>¿Qué podemos hacer nosotros como estudiantes en nuestra escuela y barrio?</li>
+    </ul>
+  </div>
+
+  <!-- EQUIPOS -->
+  <p class="section-label" style="margin-top:2.5rem;">Roles por equipo</p>
+  <div class="teams-grid">
+    <div class="team-card team-1">
+      <span class="emoji">🔬</span>
+      <h4>Equipo Científico</h4>
+      <p>Investigan las causas físicas y químicas del cambio climático y el efecto invernadero.</p>
+    </div>
+    <div class="team-card team-2">
+      <span class="emoji">🌿</span>
+      <h4>Equipo Ambiental</h4>
+      <p>Documentan el impacto en ecosistemas, biodiversidad y recursos naturales.</p>
+    </div>
+    <div class="team-card team-3">
+      <span class="emoji">🏘️</span>
+      <h4>Equipo Social</h4>
+      <p>Analizan cómo el cambio climático afecta comunidades, salud y economía local.</p>
+    </div>
+    <div class="team-card team-4">
+      <span class="emoji">💡</span>
+      <h4>Equipo de Soluciones</h4>
+      <p>Proponen acciones concretas, tecnologías y cambios de hábitos para mitigar el impacto.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- PROCESO -->
+<section id="proceso">
+  <p class="section-label">Hoja de ruta</p>
+  <h2 class="section-title">El proceso paso a paso</h2>
+  <p class="section-body">Sigue estas etapas en orden. Cada semana tiene un entregable específico que tu equipo debe completar.</p>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div>
+        <h4>Semana 1 — Exploración y organización del equipo</h4>
+        <p>Conforma tu equipo de 4-5 integrantes y elige un rol especializado. Lean juntos los recursos de introducción, luego cada miembro investigará desde su área. Elaboren un mapa conceptual colectivo sobre el cambio climático usando los recursos sugeridos.</p>
+        <span class="step-tag">📋 Entregable: Mapa conceptual digital (Canva, Google Slides o papel)</span>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">2</div>
+      <div>
+        <h4>Semana 2 — Investigación profunda por especialidad</h4>
+        <p>Cada equipo investiga en profundidad su tema usando las fuentes de recursos. Tomen notas, registren datos, capturen evidencias. Usen el formulario de toma de notas compartido. Identifiquen al menos 3 hallazgos clave y 2 datos estadísticos importantes.</p>
+        <span class="step-tag">📊 Entregable: Informe de hallazgos (mínimo 400 palabras + gráficas)</span>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">3</div>
+      <div>
+        <h4>Semana 3 — Síntesis y propuesta de acción</h4>
+        <p>Los cuatro equipos se reúnen para compartir sus hallazgos e integrarlos en un único "Informe de Emergencia Climática". El Equipo de Soluciones lidera la creación de 5 propuestas de acción local realistas que la escuela podría implementar. Diseñen una infografía de sus propuestas.</p>
+        <span class="step-tag">🗂️ Entregable: Informe integrado + infografía de propuestas</span>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">4</div>
+      <div>
+        <h4>Semana 4 — Presentación final ante el consejo estudiantil</h4>
+        <p>Preparen una presentación de 10-12 minutos (más 3 de preguntas) para exponer sus hallazgos y propuestas. Incluyan evidencias visuales, datos concretos y al menos una propuesta accionable para la escuela. ¡Sean persuasivos: están pidiendo un cambio real!</p>
+        <span class="step-tag">🎤 Entregable: Presentación + video de 2 min de concienciación</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- RECURSOS -->
+<section id="recursos">
+  <p class="section-label">Fuentes verificadas</p>
+  <h2 class="section-title">Recursos para tu investigación</h2>
+  <p class="section-body">Estas fuentes han sido seleccionadas y validadas por tu docente. Usa al menos 4 para tu investigación.</p>
+
+  <div class="resources-grid">
+    <div class="resource-card">
+      <span class="resource-type type-web">Sitio Web</span>
+      <h4>NASA Climate Change</h4>
+      <p>Portal oficial de la NASA con datos actualizados sobre temperatura global, nivel del mar y concentración de CO₂. Gráficas interactivas.</p>
+      <a href="https://climate.nasa.gov" target="_blank">Visitar → climate.nasa.gov</a>
+    </div>
+
+    <div class="resource-card">
+      <span class="resource-type type-web">Organización Internacional</span>
+      <h4>IPCC — Panel Intergubernamental</h4>
+      <p>Informes científicos de referencia mundial sobre cambio climático. Disponibles en español. Ideal para el Equipo Científico.</p>
+      <a href="https://www.ipcc.ch/languages-2/spanish/" target="_blank">Visitar → ipcc.ch</a>
+    </div>
+
+    <div class="resource-card">
+      <span class="resource-type type-video">Video educativo</span>
+      <h4>Kurzgesagt: Cambio Climático</h4>
+      <p>Serie de animaciones explicativas sobre el efecto invernadero, causas y consecuencias. Subtítulos en español. Duración: 8-12 min c/u.</p>
+      <a href="https://www.youtube.com/@kurzgesagt" target="_blank">Ver en YouTube →</a>
+    </div>
+
+    <div class="resource-card">
+      <span class="resource-type type-datos">Datos abiertos</span>
+      <h4>Our World in Data — Clima</h4>
+      <p>Gráficas y estadísticas descargables sobre emisiones por país, fuentes de energía y temperatura histórica. Excelente para análisis cuantitativo.</p>
+      <a href="https://ourworldindata.org/co2-and-greenhouse-gas-emissions" target="_blank">Explorar datos →</a>
+    </div>
+
+    <div class="resource-card">
+      <span class="resource-type type-doc">Documento oficial</span>
+      <h4>PNUMA — Acuerdo de París</h4>
+      <p>Texto y resumen del Acuerdo de París 2015. Compromisos de los países y metas de temperatura. Útil para el Equipo Social.</p>
+      <a href="https://www.un.org/es/climatechange/paris-agreement" target="_blank">Leer documento →</a>
+    </div>
+
+    <div class="resource-card">
+      <span class="resource-type type-web">Ciencia ciudadana</span>
+      <h4>iNaturalist</h4>
+      <p>Plataforma para registrar observaciones de biodiversidad local. Pueden documentar cómo el clima afecta la naturaleza cerca de tu escuela.</p>
+      <a href="https://www.inaturalist.org" target="_blank">Explorar → inaturalist.org</a>
+    </div>
+
+    <div class="resource-card">
+      <span class="resource-type type-video">Documental</span>
+      <h4>Chasing Ice (fragmentos)</h4>
+      <p>Documental fotográfico sobre el retroceso de glaciares. Fragmentos disponibles en YouTube. Visualmente impactante para la presentación final.</p>
+      <a href="https://www.youtube.com/results?search_query=chasing+ice+documentary" target="_blank">Buscar en YouTube →</a>
+    </div>
+
+    <div class="resource-card">
+      <span class="resource-type type-doc">Guía práctica</span>
+      <h4>UNICEF: Jóvenes y Clima</h4>
+      <p>Guía específica para jóvenes sobre acciones climáticas. Casos reales de estudiantes que generaron cambios en sus comunidades.</p>
+      <a href="https://www.unicef.org/es/medio-ambiente-cambio-climatico" target="_blank">Visitar → unicef.org</a>
+    </div>
+  </div>
+</section>
+
+<!-- EVALUACIÓN -->
+<div class="eval-section" id="evaluacion">
+  <div class="eval-inner">
+    <p class="section-label">Criterios de desempeño</p>
+    <h2 class="section-title">¿Cómo serás evaluado?</h2>
+    <p class="section-body">La rúbrica evalúa cuatro dimensiones. Cada una vale 2.5-4 puntos para un total de 10.</p>
+
+    <table class="rubric">
+      <thead>
+        <tr>
+          <th>Criterio</th>
+          <th>Excelente <span class="score">2.50 pts</span></th>
+          <th>Satisfactorio <span class="score mid">2 pts</span></th>
+          <th>En proceso <span class="score low">1.75 pts</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>🔍 Rigor de la investigación</strong><br><small>Calidad y variedad de fuentes, datos concretos, profundidad del análisis</small></td>
+          <td>Usa 5+ fuentes verificadas, cita datos específicos, analiza causas y consecuencias con profundidad.</td>
+          <td>Usa 3-4 fuentes, incluye algunos datos, análisis parcial del tema asignado.</td>
+          <td>Menos de 3 fuentes, escasos datos, análisis superficial o incompleto.</td>
+        </tr>
+        <tr>
+          <td><strong>🤝 Trabajo colaborativo</strong><br><small>Participación equitativa, integración de los cuatro equipos, evidencia de cooperación</small></td>
+          <td>Todos participaron de forma equitativa, las perspectivas se integraron de forma coherente en el informe final.</td>
+          <td>La mayoría participó activamente. El informe integra parcialmente los aportes de cada equipo.</td>
+          <td>Participación desequilibrada. El informe no integra claramente las perspectivas de los equipos.</td>
+        </tr>
+        <tr>
+          <td><strong>💬 Comunicación científica</strong><br><small>Claridad, uso de lenguaje científico, calidad de presentación oral y escrita</small></td>
+          <td>Lenguaje claro y científicamente preciso. Presentación fluida, convincente y con apoyo visual de calidad.</td>
+          <td>Lenguaje apropiado aunque con algunos errores. Presentación comprensible con apoyos visuales básicos.</td>
+          <td>Lenguaje impreciso o poco claro. Presentación difícil de seguir, apoyos visuales insuficientes.</td>
+        </tr>
+        <tr>
+          <td><strong>🌱 Propuesta de acción</strong><br><small>Originalidad, viabilidad y pertinencia de las soluciones propuestas para la comunidad</small></td>
+          <td>5 propuestas concretas, originales y viables para el contexto escolar, con pasos de implementación claros.</td>
+          <td>3-4 propuestas razonables aunque generales. Algunos detalles de implementación.</td>
+          <td>Menos de 3 propuestas o son demasiado genéricas, sin relación con el contexto local.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- CONCLUSIÓN -->
+<div class="conclusion-bg" id="conclusion">
+  <div class="conclusion-inner">
+    <p class="section-label" style="color:rgba(255,255,255,0.6);">Para reflexionar</p>
+    <h2 class="section-title">Conclusión: el conocimiento como herramienta de cambio</h2>
+    <p class="section-body">
+      Al terminar esta WebQuest, no solo habrás aprendido sobre el cambio climático: habrás vivido el proceso de una investigación real. Los científicos trabajan exactamente así: colaborando, cuestionando, buscando evidencias y comunicando sus hallazgos para mover al mundo hacia mejores decisiones.
+    </p>
+    <p class="section-body" style="margin-top:1rem;">
+      El cambio climático es uno de los desafíos más complejos de nuestro tiempo. Pero la historia muestra que los jóvenes tienen el poder de generar transformaciones reales. ¿Qué harás con lo que aprendiste?
+    </p>
+    <a href="#introduccion" class="cta-box">↑ Volver al inicio</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p><strong>Detectives del Clima</strong> — WebQuest para Ciencias Naturales · Grado 8° · Diseñada con propósito pedagógico</p>
+  <p style="margin-top:0.4rem;">Basada en el modelo WebQuest de Bernie Dodge (1995) · Todos los recursos enlazados son de acceso público</p>
+</footer>
+
+</body>
+</html>
